@@ -1,11 +1,14 @@
 import { createFactory } from "hono/factory";
-import { zValidator } from "../lib/api-hub.validator";
-import { MusicGetRecentTrackContext } from "../lib/api-hub.context";
+import { zValidator } from "../infra/lib/api-hub.validator";
+import { MusicGetRecentTrackContext } from "../infra/lib/api-hub.context";
 import {
 	musicGetRecentTrackParams,
 	musicGetRecentTrackResponse,
-} from "../lib/api-hub.zod";
-import { transformLastfmTrack, type LastfmRecentTracksResponse } from "../utils/lastfm";
+} from "../infra/lib/api-hub.zod";
+import {
+	fetchRecentTrack,
+	transformLastfmTrack,
+} from "../infra/externals/lastfm";
 
 const factory = createFactory();
 
@@ -14,10 +17,7 @@ export const musicGetRecentTrackHandlers = factory.createHandlers(
 	zValidator("response", musicGetRecentTrackResponse),
 	async (c: MusicGetRecentTrackContext) => {
 		const { userID } = c.req.valid("param");
-		const lastfmRes = await fetch(
-			`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${userID}&api_key=${c.env.API_KEY}&format=json&limit=1`,
-		);
-		const lastfmData = await lastfmRes.json() as LastfmRecentTracksResponse;
+		const lastfmData = await fetchRecentTrack(userID, c.env.API_KEY);
 		const transformed = transformLastfmTrack(lastfmData);
 		const validated = musicGetRecentTrackResponse.parse(transformed);
 		return c.json(validated, 200);

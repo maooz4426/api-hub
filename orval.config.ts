@@ -6,7 +6,7 @@ module.exports = {
 		output: {
 			mode: "split",
 			client: "hono",
-			target: "src/lib/api-hub.ts",
+			target: "src/infra/lib/api-hub.ts",
 			override: {
 				hono: {
 					handlers: "src/handlers",

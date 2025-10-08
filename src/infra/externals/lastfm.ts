@@ -51,7 +51,9 @@ export interface LastfmRecentTracksResponse {
  * @param lastfmResponse Raw response from Last.fm API
  * @returns Transformed track data matching the RecentTrack schema
  */
-export function transformLastfmTrack(lastfmResponse: LastfmRecentTracksResponse) {
+export function transformLastfmTrack(
+	lastfmResponse: LastfmRecentTracksResponse,
+) {
 	const track = lastfmResponse.recenttracks.track[0];
 
 	if (!track) {
@@ -66,18 +68,14 @@ export function transformLastfmTrack(lastfmResponse: LastfmRecentTracksResponse)
 			text: track.artist["#text"],
 		},
 		image: {
-			smallImage: track.image.find((img) => img.size === "small")?.[
-				"#text"
-			] || "",
-			mediumImage: track.image.find((img) => img.size === "medium")?.[
-				"#text"
-			] || "",
-			largeImage: track.image.find((img) => img.size === "large")?.[
-				"#text"
-			] || "",
-			extraLarge: track.image.find((img) => img.size === "extralarge")?.[
-				"#text"
-			] || "",
+			smallImage:
+				track.image.find((img) => img.size === "small")?.["#text"] || "",
+			mediumImage:
+				track.image.find((img) => img.size === "medium")?.["#text"] || "",
+			largeImage:
+				track.image.find((img) => img.size === "large")?.["#text"] || "",
+			extraLarge:
+				track.image.find((img) => img.size === "extralarge")?.["#text"] || "",
 		},
 		album: {
 			mbid: track.album.mbid,
@@ -85,3 +83,13 @@ export function transformLastfmTrack(lastfmResponse: LastfmRecentTracksResponse)
 		},
 	};
 }
+export const fetchRecentTrack = async (
+	userID: string,
+	apiKey: string,
+): Promise<LastfmRecentTracksResponse> => {
+	const res = await fetch(
+		`http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${userID}&api_key=${apiKey}&format=json&limit=1`,
+	);
+	const data = (await res.json()) as LastfmRecentTracksResponse;
+	return data;
+};
