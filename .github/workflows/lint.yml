@@ -25,4 +25,3 @@ jobs:
           reporter: github-pr-review
           fail_level: "error"
           biome_flags: "-conf ./biome.json"
-      - run: bun run build
