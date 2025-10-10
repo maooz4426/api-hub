@@ -9,7 +9,7 @@ import {
 } from 'hono';
 
 
-import { musicGetRecentTrackHandlers } from '../../handlers/musicGetRecentTrack';
+import { musicGetRecentTrackHandlers } from '../../../../handlers/musicGetRecentTrack';
 
 
 const app = new Hono()
@@ -20,6 +20,5 @@ const app = new Hono()
  */
 
 app.get('/music/:userID',...musicGetRecentTrackHandlers)
-
 
 export default app

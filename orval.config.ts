@@ -4,12 +4,17 @@ module.exports = {
 			target: "doc/tsp/tsp-output/schema/openapi.yaml",
 		},
 		output: {
-			mode: "split",
+			mode: "tags-split",
 			client: "hono",
-			target: "src/infra/lib/api-hub.ts",
+			workspace: "src/infra/lib/",
+			target: "endpoints",
+			schemas: "dtos",
+			indexFiles: false,
 			override: {
 				hono: {
-					handlers: "src/handlers",
+					handlers: "src/infra/lib/handlers",
+					compositeRoute: "src/infra/lib/routes.ts",
+					validatorOutputPath: "src/infra/lib/validator.ts",
 				},
 			},
 		},

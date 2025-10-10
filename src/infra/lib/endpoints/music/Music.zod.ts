@@ -6,7 +6,7 @@
  */
 import { z as zod } from 'zod';
 
-export const musicGetRecentTrackParams = zod.object({
+export const musicGetRecentTrackQueryParams = zod.object({
   "userID": zod.string()
 })
 
