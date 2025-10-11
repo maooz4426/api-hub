@@ -1,4 +1,4 @@
-import { MusicSVG, toSVG } from "../domain/svg";
+import { type MusicSVG, toSVG } from "../domain/svg";
 import {
 	fetchRecentTrack,
 	transformLastfmTrack,
