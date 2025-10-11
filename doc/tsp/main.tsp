@@ -60,3 +60,23 @@ interface Music {
   ): RecentTrack;
 }
 
+model svgImage {
+  @header contentType: "image/svg+xml";
+  @body image: string;
+}
+
+@route("/music/svg")
+@tag("Music")
+interface MusicSVG {
+  @summary("最近聞いた曲のSVGを取得")
+  @doc("lastfmで取得した情報からSVGを生成")
+  @get
+  getRecentTrackSVG(
+    @doc("svg情報")
+    @query
+    userID: string,
+
+    preview: boolean,
+  ): svgImage;
+}
+
