@@ -5,6 +5,9 @@
  * OpenAPI spec version: 0.0.0
  */
 
+/**
+ * アートワークの各サイズを作成
+ */
 export interface Image {
   smallImage: string;
   mediumImage: string;

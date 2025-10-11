@@ -5,7 +5,12 @@
  * OpenAPI spec version: 0.0.0
  */
 
+/**
+ * アーティスト情報
+ */
 export interface Artist {
+  /** 識別子 */
   mbid: string;
+  /** アーティスト名 */
   text: string;
 }

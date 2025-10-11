@@ -7,25 +7,34 @@
 import { z as zod } from 'zod';
 
 export const musicGetRecentTrackQueryParams = zod.object({
-  "userID": zod.string()
+  "userID": zod.string().describe('lastfmで登録しているuserID')
 })
 
 export const musicGetRecentTrackResponse = zod.object({
-  "mbid": zod.string(),
-  "name": zod.string(),
+  "mbid": zod.string().describe('識別子'),
+  "name": zod.string().describe('曲名'),
   "artist": zod.object({
-  "mbid": zod.string(),
-  "text": zod.string()
-}),
+  "mbid": zod.string().describe('識別子'),
+  "text": zod.string().describe('アーティスト名')
+}).describe('アーティスト情報'),
   "image": zod.object({
   "smallImage": zod.string(),
   "mediumImage": zod.string(),
   "largeImage": zod.string(),
   "extraLarge": zod.string()
-}),
+}).describe('アートワークの各サイズを作成'),
   "album": zod.object({
-  "mbid": zod.string(),
-  "text": zod.string()
+  "mbid": zod.string().describe('識別子'),
+  "text": zod.string().describe('アルバム名')
+}).describe('アルバム情報')
+}).describe('最近の聞いた曲の情報')
+
+
+export const musicSVGGetRecentTrackSVGQueryParams = zod.object({
+  "userID": zod.string().describe('svg情報')
 })
+
+export const musicSVGGetRecentTrackSVGBody = zod.object({
+  "preview": zod.boolean()
 })
 
