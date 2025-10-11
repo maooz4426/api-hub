@@ -6,9 +6,11 @@
  */
 import { Hono } from 'hono';
 import { musicGetRecentTrackHandlers } from './handlers/musicGetRecentTrack';
+import { musicSVGGetRecentTrackSVGHandlers } from './handlers/musicSVGGetRecentTrackSVG';
 
 const app = new Hono()
 
-app.get('/music',...musicGetRecentTrackHandlers)
+app.get('/music',...musicGetRecentTrackHandlers);
+app.get('/music/svg',...musicSVGGetRecentTrackSVGHandlers)
 
 export default app

@@ -5,9 +5,6 @@
  * OpenAPI spec version: 0.0.0
  */
 
-export type MusicGetRecentTrackParams = {
-/**
- * lastfmで登録しているuserID
- */
-userID: string;
+export type MusicSVGGetRecentTrackSVGBody = {
+  preview: boolean;
 };

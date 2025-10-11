@@ -7,7 +7,10 @@
 import type { Context, Env } from 'hono';
 
 import {
-  MusicGetRecentTrackParams
+  MusicGetRecentTrackParams,
+  MusicSVGGetRecentTrackSVGParams,
+  MusicSVGGetRecentTrackSVGBody
 } from '../../dtos';
 
 export type MusicGetRecentTrackContext<E extends Env = any> = Context<E, '/music', { in: { query: MusicGetRecentTrackParams, }, out: { query: MusicGetRecentTrackParams, } }>
+export type MusicSVGGetRecentTrackSVGContext<E extends Env = any> = Context<E, '/music/svg', { in: { query: MusicSVGGetRecentTrackSVGParams,json: MusicSVGGetRecentTrackSVGBody, }, out: { query: MusicSVGGetRecentTrackSVGParams,json: MusicSVGGetRecentTrackSVGBody, } }>

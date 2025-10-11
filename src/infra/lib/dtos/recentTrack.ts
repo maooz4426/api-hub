@@ -8,8 +8,13 @@ import type { Artist } from './artist';
 import type { Image } from './image';
 import type { Album } from './album';
 
+/**
+ * 最近の聞いた曲の情報
+ */
 export interface RecentTrack {
+  /** 識別子 */
   mbid: string;
+  /** 曲名 */
   name: string;
   artist: Artist;
   image: Image;

@@ -5,7 +5,12 @@
  * OpenAPI spec version: 0.0.0
  */
 
+/**
+ * アルバム情報
+ */
 export interface Album {
+  /** 識別子 */
   mbid: string;
+  /** アルバム名 */
   text: string;
 }
