@@ -31,10 +31,10 @@ export const toSVG = (
 	const height = customHeight || 120;
 	const width = customWidth || (showArtwork ? 450 : 400);
 	const padding = 15;
-	const artworkSize = 100;
-	const artworkX = padding;
-	const artworkY = padding - 5;
-	const textStartX = showArtwork ? padding + artworkSize + 15 : padding;
+	const artworkSize = 120;
+	const artworkX = 0;
+	const artworkY = 0;
+	const textStartX = artworkSize;
 
 	const bgColor = "#1db954";
 
@@ -42,6 +42,17 @@ export const toSVG = (
 
 	// SVG生成
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+    <defs>
+  <clipPath id="artwork-clip">
+    <rect 
+      x="${artworkX}" 
+      y="${artworkY}" 
+      width="${artworkSize}" 
+      height="${artworkSize}" 
+      rx="6" 
+    />
+  </clipPath>
+</defs>
   
   <rect width="${width}" height="${height}" fill="${backgroundColor}" rx="8"/>
   
