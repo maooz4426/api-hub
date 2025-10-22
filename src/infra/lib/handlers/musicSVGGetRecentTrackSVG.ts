@@ -1,7 +1,7 @@
 import { createFactory } from "hono/factory";
 import { zValidator } from "../validator";
-import { MusicSVGGetRecentTrackSVGContext } from "../endpoints/music/music.context";
-import { musicSVGGetRecentTrackSVGQueryParams } from "../endpoints/music/music.zod";
+import { MusicSVGGetRecentTrackSVGContext } from "../endpoints/music/Music.context";
+import { musicSVGGetRecentTrackSVGQueryParams } from "../endpoints/music/Music.zod";
 import { generateSVG, GenerateSVGInput } from "../../../usecase/generate_svg";
 
 const factory = createFactory();
