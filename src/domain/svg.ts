@@ -40,13 +40,18 @@ export const toSVG = async (
 
 	// GitHubのmdで画像を表示できるようにエンコード
 	let artworkBase64: string;
-	try {
-		const res = await fetch(data.artworkURL);
-		const buf = await res.arrayBuffer();
-		const binary = Array.from(new Uint8Array(buf), byte => String.fromCharCode(byte)).join('');
-		const base64 = btoa(binary);
-		artworkBase64 = `data:image/jpeg;base64,${base64}`;
-	} catch (e) {
+	if (showArtwork && data.artworkURL) {
+		try {
+			const res = await fetch(data.artworkURL);
+			const buf = await res.arrayBuffer();
+			const binary = Array.from(new Uint8Array(buf), byte => String.fromCharCode(byte)).join('');
+			const base64 = btoa(binary);
+			artworkBase64 = `data:image/jpeg;base64,${base64}`;
+		} catch (e) {
+			// 1x1 transparent PNG
+			artworkBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
+		}
+	} else {
 		// 1x1 transparent PNG
 		artworkBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
 	}
