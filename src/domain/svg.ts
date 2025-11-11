@@ -39,7 +39,7 @@ export const toSVG = async (
 	const nowPlayingBgColor = "#1db954";
 	const nowPlayingText = "🎵Now Playing";
 	const recentPlayBgColor = "#0075c2";
-	const recentPlayText = "🎵Recent Played";
+	const recentPlayText = "🎵Recently Played";
 	const backgroundColor = colors.background || "#1a1a1a";
 
 	const bgColor = data.nowPlaying ? nowPlayingBgColor : recentPlayBgColor;
