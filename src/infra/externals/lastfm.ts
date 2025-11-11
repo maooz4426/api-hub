@@ -81,7 +81,7 @@ export function transformLastfmTrack(
 			mbid: track.album.mbid,
 			text: track.album["#text"],
 		},
-		nowplaying: track["@attr"]?.nowplaying == "true",
+		nowplaying: track["@attr"]?.nowplaying === "true",
 	};
 }
 export const fetchRecentTrack = async (
