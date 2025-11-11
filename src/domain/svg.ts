@@ -3,6 +3,7 @@ export type MusicSVG = {
 	artist: string;
 	album: string;
 	artworkURL: string;
+	nowPlaying: boolean;
 };
 
 export type MusicSVGOptions = {
@@ -35,8 +36,14 @@ export const toSVG = async (
 	const artworkX = 0;
 	const artworkY = 0;
 	const textStartX = artworkSize;
-	const bgColor = "#1db954";
+	const nowPlayingBgColor = "#1db954";
+	const nowPlayingText = "🎵Now Playing";
+	const recentPlayBgColor = "#0075c2";
+	const recentPlayText = "🎵Recent Played";
 	const backgroundColor = colors.background || "#1a1a1a";
+
+	const bgColor = data.nowPlaying ? nowPlayingBgColor : recentPlayBgColor;
+	const headerText = data.nowPlaying ? nowPlayingText : recentPlayText;
 
 	// GitHubのmdで画像を表示できるようにエンコード
 	let artworkBase64: string;
@@ -44,16 +51,20 @@ export const toSVG = async (
 		try {
 			const res = await fetch(data.artworkURL);
 			const buf = await res.arrayBuffer();
-			const binary = Array.from(new Uint8Array(buf), byte => String.fromCharCode(byte)).join('');
+			const binary = Array.from(new Uint8Array(buf), (byte) =>
+				String.fromCharCode(byte),
+			).join("");
 			const base64 = btoa(binary);
 			artworkBase64 = `data:image/jpeg;base64,${base64}`;
 		} catch (e) {
 			// 1x1 transparent PNG
-			artworkBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
+			artworkBase64 =
+				"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
 		}
 	} else {
 		// 1x1 transparent PNG
-		artworkBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
+		artworkBase64 =
+			"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
 	}
 
 	// SVG生成
@@ -91,7 +102,7 @@ export const toSVG = async (
         font-size="12" 
         font-weight="bold"
         fill="#ffffff">
-        🎵Now Playing
+${headerText}
   </text>
   
   <text x="${textStartX + 10}" y="50" 
