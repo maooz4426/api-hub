@@ -19,6 +19,7 @@ export const generateSVG = async (input: GenerateSVGInput) => {
 		artist: musicInfo.artist.text,
 		album: musicInfo.album.text,
 		artworkURL: musicInfo.image.extraLarge,
+		nowPlaying: musicInfo.nowplaying,
 	};
 	return toSVG(toSVGInfo);
 };
