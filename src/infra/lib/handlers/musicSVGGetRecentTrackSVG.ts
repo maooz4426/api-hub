@@ -16,6 +16,7 @@ export const musicSVGGetRecentTrackSVGHandlers = factory.createHandlers(
 		};
 		const svg = await generateSVG(input);
     c.header("Content-Type","image/svg+xml");
+    c.header("Cache-Control","no-store");
 		// クエリパラメータでプレビューモード切替
 		if (c.req.query("preview") === "true") {
 			return c.html(`
