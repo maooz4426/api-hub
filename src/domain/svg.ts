@@ -42,7 +42,8 @@ export const toSVG = async (
 	const artworkBase64 = await fetch(data.artworkURL)
 		.then((res) => res.arrayBuffer())
 		.then((buf) => {
-			const base64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+			const binary = Array.from(new Uint8Array(buf), byte => String.fromCharCode(byte)).join('');
+			const base64 = btoa(binary);
 			return `data:image/jpeg;base64,${base64}`;
 		});
 
