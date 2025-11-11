@@ -16,10 +16,10 @@ export type MusicSVGOptions = {
 	};
 };
 
-export const toSVG = (
+export const toSVG = async (
 	data: MusicSVG,
 	options: MusicSVGOptions = {},
-): string => {
+): Promise<string> => {
 	const {
 		showArtwork = !!data.artworkURL,
 		width: customWidth,
@@ -35,10 +35,26 @@ export const toSVG = (
 	const artworkX = 0;
 	const artworkY = 0;
 	const textStartX = artworkSize;
-
 	const bgColor = "#1db954";
-
 	const backgroundColor = colors.background || "#1a1a1a";
+
+	// GitHubのmdで画像を表示できるようにエンコード
+	let artworkBase64: string;
+	if (showArtwork && data.artworkURL) {
+		try {
+			const res = await fetch(data.artworkURL);
+			const buf = await res.arrayBuffer();
+			const binary = Array.from(new Uint8Array(buf), byte => String.fromCharCode(byte)).join('');
+			const base64 = btoa(binary);
+			artworkBase64 = `data:image/jpeg;base64,${base64}`;
+		} catch (e) {
+			// 1x1 transparent PNG
+			artworkBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
+		}
+	} else {
+		// 1x1 transparent PNG
+		artworkBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
+	}
 
 	// SVG生成
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
@@ -56,10 +72,9 @@ export const toSVG = (
   
   <rect width="${width}" height="${height}" fill="${backgroundColor}" rx="8"/>
   
-
   <rect x="${artworkX}" y="${artworkY}" width="${artworkSize}" height="${artworkSize}" fill="#2a2a2a" rx="6"/>
   <image 
-    href="${data.artworkURL}"
+    href="${artworkBase64}"
     x="${artworkX}" 
     y="${artworkY}" 
     width="${artworkSize}" 
@@ -67,19 +82,16 @@ export const toSVG = (
     clip-path="url(#artwork-clip)"
     preserveAspectRatio="xMidYMid slice"
   />
-
   
   <rect x="${textStartX}" width="${width - textStartX}" height="25" fill="${bgColor}" rx="8"/>
   <rect x="${textStartX}" y="8" width="${width - textStartX}" height="20" fill="${bgColor}"/>
   
-
   <text x="${textStartX + 10}" y="18" 
         font-family="Arial, sans-serif" 
         font-size="12" 
         font-weight="bold"
         fill="#ffffff">
         🎵Now Playing
-
   </text>
   
   <text x="${textStartX + 10}" y="50" 
