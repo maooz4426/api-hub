@@ -39,13 +39,17 @@ export const toSVG = async (
 	const backgroundColor = colors.background || "#1a1a1a";
 
 	// GitHubのmdで画像を表示できるようにエンコード
-	const artworkBase64 = await fetch(data.artworkURL)
-		.then((res) => res.arrayBuffer())
-		.then((buf) => {
-			const binary = Array.from(new Uint8Array(buf), byte => String.fromCharCode(byte)).join('');
-			const base64 = btoa(binary);
-			return `data:image/jpeg;base64,${base64}`;
-		});
+	let artworkBase64: string;
+	try {
+		const res = await fetch(data.artworkURL);
+		const buf = await res.arrayBuffer();
+		const binary = Array.from(new Uint8Array(buf), byte => String.fromCharCode(byte)).join('');
+		const base64 = btoa(binary);
+		artworkBase64 = `data:image/jpeg;base64,${base64}`;
+	} catch (e) {
+		// 1x1 transparent PNG
+		artworkBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+X2ZkAAAAASUVORK5CYII=";
+	}
 
 	// SVG生成
 	return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
