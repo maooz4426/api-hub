@@ -16,10 +16,8 @@ export const musicSVGGetRecentTrackSVGHandlers = factory.createHandlers(
 		};
 		const svg = await generateSVG(input);
 		c.header("Content-Type","image/svg+xml");
-		c.header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0, s-maxage=0, proxy-revalidate");
-		c.header("Pragma", "no-cache");
+		c.header("Cache-Control", "no-store, no-cache, max-age=0");
 		c.header("Expires", "Thu, 01 Jan 1970 00:00:00 GMT");
-		c.header("Surrogate-Control", "no-store");
 		// クエリパラメータでプレビューモード切替
 		if (c.req.query("preview") === "true") {
 			return c.html(`
